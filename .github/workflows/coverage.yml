@@ -1,0 +1,40 @@
+name: Coverage
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  forge-coverage:
+    name: Forge Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Check out the repo"
+        uses: "actions/checkout@v4"
+        with:
+          submodules: recursive
+      - name: "Install Foundry"
+        uses: "foundry-rs/foundry-toolchain@v1"
+      - name: "Generate the coverage report using the unit and the integration tests"
+        run: forge coverage --report lcov
+      - name: "Install lcov"
+        run: sudo apt-get update && sudo apt-get install lcov
+      - name: "Remove unwanted files"
+        run: |
+          lcov --ignore-errors unused --remove lcov.info 'test/*' -o lcov.info
+          lcov --ignore-errors unused --remove lcov.info 'script/*' -o lcov.info
+          lcov --ignore-errors unused --remove lcov.info '*/upgradeability/*' -o lcov.info
+      - name: "Upload coverage report to Codecov"
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./lcov.info
+          verbose: true
+      - name: "Add summary"
+        run: |
+         echo "## Coverage result" >> $GITHUB_STEP_SUMMARY
+         echo "✅ Uploaded to Codecov" >> $GITHUB_STEP_SUMMARY
+

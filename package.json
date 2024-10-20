@@ -1,0 +1,29 @@
+{
+  "name": "@webisopen/ovm-contracts",
+  "license": "MIT",
+  "version": "1.0.0",
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "solhint": "^5.0.3"
+  },
+  "files": [
+    "/src/**/*.sol",
+    "!/src/templates/**/*",
+    "!/src/OVMTasks.sol"
+  ],
+  "scripts": {
+    "setup": "make clean && make build",
+    "sync": "make install",
+    "build": "make build",
+    "test": "make foundry-test",
+    "abi": "make abi",
+    "snapshot": "make snapshot",
+    "lint": "make lint",
+    "solhint": "make solhint",
+    "upgradeable": "make upgradeable",
+    "mythril": "make mythril",
+    "mythx": "make mythx",
+    "storage-layout": "make storage-layout",
+    "prepare": "husky install"
+  }
+}

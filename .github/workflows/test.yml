@@ -1,0 +1,27 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Check out the repo"
+        uses: "actions/checkout@v4"
+        with:
+          submodules: recursive
+      - name: "Install Foundry"
+        uses: "foundry-rs/foundry-toolchain@v1"
+      - name: "Run the tests"
+        run: forge test
+      - name: "Add summary"
+        run: |
+          echo "## Unit Tests result" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Passed" >> $GITHUB_STEP_SUMMARY
+

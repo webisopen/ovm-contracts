@@ -1,0 +1,62 @@
+name: checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+
+  codespell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run CodeSpell
+        uses: codespell-project/actions-codespell@v2
+        with:
+          check_filenames: true
+          skip: ./.git,./docs,package-lock.json,yarn.lock
+
+  solhint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install Dependencies
+        run: yarn install
+      - name: Run Check
+        run: yarn solhint
+
+  mythril:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+      - name: Run Check
+        run: yarn mythril
+
+  slither:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: "Check out the repo"
+        uses: "actions/checkout@v4"
+      - name: "Run Slither analysis"
+        uses: "crytic/slither-action@v0.4.0"
+        id: "slither"
+        with:
+          sarif: results.sarif
+          fail-on: none
+          slither-config: slither.config.json
+      - name: "Add summary"
+        run: |
+          echo "## Slither result" >> $GITHUB_STEP_SUMMARY
