@@ -1,7 +1,7 @@
 {
   "name": "@webisopen/ovm-contracts",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "devDependencies": {
     "husky": "^8.0.3",
     "solhint": "^5.0.3"

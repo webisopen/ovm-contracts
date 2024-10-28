@@ -34,7 +34,7 @@ struct Specification {
     // to call, e.g. " [{"request":"calculate(uint256)","getResponse":"getResponse(uint256)"}]"
     Arch arch; // architecture of the computing task, e.g. x86_64, arm64
     ExecMode execMode; // how the computing task should be executed in the worker node, JIT or
-    // PERSISTENT
+        // PERSISTENT
 }
 
 struct Commitment {
