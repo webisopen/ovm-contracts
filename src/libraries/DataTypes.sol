@@ -14,6 +14,11 @@ struct Requirement {
     bool gpu; // whether GPU is required
 }
 
+enum Arch {
+    AMD64,
+    ARM64
+}
+
 struct Specification {
     string version; // version of the Specification schema(eg. currently only "1.0.0" available)
     string name; // name of the computing task
@@ -26,9 +31,10 @@ struct Specification {
     Requirement requirement; // requirement of the computing task, e.g. CPU, RAM, GPU, etc.
     uint256 royalty; // royalty fee rate, in basis points, e.g. 5 means 0.05%
     string apiABIs; // declaration of the abis to request and get response for other contracts
-        // to call, e.g. " [{"request":"calculate(uint256)","getResponse":"getResponse(uint256)"}]"
+    // to call, e.g. " [{"request":"calculate(uint256)","getResponse":"getResponse(uint256)"}]"
+    Arch arch; // architecture of the computing task, e.g. x86_64, arm64
     ExecMode execMode; // how the computing task should be executed in the worker node, JIT or
-        // PERSISTENT
+    // PERSISTENT
 }
 
 struct Commitment {
