@@ -24,7 +24,7 @@ struct Specification {
     string name; // name of the computing task
     string description; // description of the computing task
     string environments; // environments of the computing task, e.g. "python:3.7;node:19.0.0", if
-        // there
+    // there
     // are multiple environments, they should be separated by ";"
     string repository; // repository of the computing task
     string repoTag; // tag of the repository, e.g. "release-2.0"
@@ -34,7 +34,7 @@ struct Specification {
     uint256 royalty; // royalty fee rate, in basis points, e.g. 5 means 0.05%
     string apiABIs; // declaration of the abis to request and get response for other contracts
     // to call, e.g. " [{"request":"calculate(uint256)","getResponse":"getResponse(uint256)"}]"
-    Arch arch; // architecture of the computing task, e.g. x86_64, arm64
+    Arch arch; // architecture of the computing task, e.g. amd64, arm64
     ExecMode execMode; // how the computing task should be executed in the worker node, JIT or
         // PERSISTENT
 }
