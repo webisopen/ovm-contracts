@@ -23,7 +23,9 @@ struct Specification {
     string version; // version of the Specification schema(eg. currently only "1.0.0" available)
     string name; // name of the computing task
     string description; // description of the computing task
-    string environment; // environment of the computing task, e.g. "python:3.7"
+    string environments; // environments of the computing task, e.g. "python:3.7;node:19.0.0", if
+        // there
+    // are multiple environments, they should be separated by ";"
     string repository; // repository of the computing task
     string repoTag; // tag of the repository, e.g. "release-2.0"
     string license; // license of the computing task

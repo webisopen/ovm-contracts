@@ -26,7 +26,7 @@ contract OVMClientTest is Test {
 
         vm.deal(alice, payment);
 
-        uint256 royalty = ovmClient.getSpecification().royalty * payment / _denominator();
+        uint256 royalty = (ovmClient.getSpecification().royalty * payment) / _denominator();
 
         // request
         vm.prank(alice);
@@ -117,7 +117,7 @@ contract OVMClientTest is Test {
         newSpec.name = "ovmClient";
         newSpec.version = "1.0.1";
         newSpec.description = "Calculate ovmClient";
-        newSpec.environment = "python:3.8";
+        newSpec.environments = "python:3.8";
         newSpec.repository = "https://github.com/kallydev/kallyovmClient";
         newSpec.repoTag = "0xb6a6502fa480fd1fb5bf95c1fb1366bcbc335a08356c2a97daf6bc44e9cc0000";
         newSpec.license = "WTFPL";
@@ -136,7 +136,7 @@ contract OVMClientTest is Test {
         Specification memory spec = ovmClient.getSpecification();
         assertEq(spec.version, "1.0.1");
         assertEq(spec.description, "Calculate ovmClient");
-        assertEq(spec.environment, "python:3.8");
+        assertEq(spec.environments, "python:3.8");
         assertEq(spec.royalty, 5);
     }
 
