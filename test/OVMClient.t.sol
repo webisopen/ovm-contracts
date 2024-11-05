@@ -1,7 +1,7 @@
 // solhint-disable no-console,comprehensive-interface,quotes
 pragma solidity 0.8.24;
 
-import {ExecMode, Requirement, Specification} from "../src/libraries/DataTypes.sol";
+import {ExecMode, GPUModel, Requirement, Specification} from "../src/libraries/DataTypes.sol";
 import {SpecificationUpdated} from "../src/libraries/Events.sol";
 import {MockOVMTasks} from "./mocks/MockOVMTasks.sol";
 import {OVMClientImpl} from "./mocks/OVMClientImpl.sol";
@@ -117,13 +117,17 @@ contract OVMClientTest is Test {
         newSpec.name = "ovmClient";
         newSpec.version = "1.0.1";
         newSpec.description = "Calculate ovmClient";
-        newSpec.environments = "python:3.8";
         newSpec.repository = "https://github.com/kallydev/kallyovmClient";
         newSpec.repoTag = "0xb6a6502fa480fd1fb5bf95c1fb1366bcbc335a08356c2a97daf6bc44e9cc0000";
         newSpec.license = "WTFPL";
-        newSpec.entrypoint = "src/main.py";
-        newSpec.requirement =
-            Requirement({ram: "256mb", disk: "5mb", timeout: 600, gpu: false, cpu: 1});
+        newSpec.requirement = Requirement({
+            ram: "256mb",
+            disk: "5mb",
+            timeout: 600,
+            gpu: 1,
+            gpuModel: GPUModel.T4,
+            cpu: 1
+        });
         newSpec.royalty = 5;
         newSpec.execMode = ExecMode.JIT;
 
@@ -136,7 +140,6 @@ contract OVMClientTest is Test {
         Specification memory spec = ovmClient.getSpecification();
         assertEq(spec.version, "1.0.1");
         assertEq(spec.description, "Calculate ovmClient");
-        assertEq(spec.environments, "python:3.8");
         assertEq(spec.royalty, 5);
     }
 

@@ -102,11 +102,9 @@ abstract contract OVMClient is IOVMClient, AccessControlEnumerable {
         _specification.name = spec.name;
         _specification.version = spec.version;
         _specification.description = spec.description;
-        _specification.environments = spec.environments;
         _specification.repository = spec.repository;
         _specification.repoTag = spec.repoTag;
         _specification.license = spec.license;
-        _specification.entrypoint = spec.entrypoint;
         _specification.requirement = spec.requirement;
         _specification.apiABIs = spec.apiABIs;
         _specification.royalty = spec.royalty;
