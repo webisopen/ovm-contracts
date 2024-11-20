@@ -3,7 +3,7 @@
 pragma solidity 0.8.24;
 
 import {IOVMClient} from "./interfaces/IOVMClient.sol";
-import {IOVMTasks} from "./interfaces/IOVMTasks.sol";
+import {IOVMGateway} from "./interfaces/IOVMGateway.sol";
 import {Specification} from "./libraries/DataTypes.sol";
 import {ResponseRecorded, SpecificationUpdated} from "./libraries/Events.sol";
 import {AccessControlEnumerable} from
@@ -20,8 +20,8 @@ abstract contract OVMClient is IOVMClient, AccessControlEnumerable {
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
     uint96 public constant DENOMINATOR = 10000;
 
-    /// @dev address of the OVMTasks contract
-    address private immutable _OVMTasks;
+    /// @dev address of the OVMGateway contract
+    address private immutable _OVMGateway;
     /// @dev pending requests are requests that are not yet responded by the OVM task contract
     mapping(bytes32 requestId => bool isPending) private _pendingRequests;
 
@@ -46,21 +46,21 @@ abstract contract OVMClient is IOVMClient, AccessControlEnumerable {
     }
 
     /* @notice It is supposed to be used along with setResponse */
-    modifier onlyOVMTask() {
-        require(msg.sender == _OVMTasks, "Caller is not the OVMTasks contract");
+    modifier onlyOVMGateway() {
+        require(msg.sender == _OVMGateway, "Caller is not the OVMGateway contract");
         _;
     }
 
     // Constructor
-    constructor(address OVMTasks, address admin) {
-        _OVMTasks = OVMTasks;
+    constructor(address OVMGateway, address admin) {
+        _OVMGateway = OVMGateway;
 
         _grantRole(ADMIN_ROLE, admin);
     }
 
     /// @inheritdoc IOVMClient
     function cancelRequest(bytes32 requestId) public virtual override {
-        IOVMTasks(_OVMTasks).cancelRequest(requestId);
+        IOVMGateway(_OVMGateway).cancelRequest(requestId);
         _removePendingRequest(requestId);
     }
 
@@ -90,8 +90,8 @@ abstract contract OVMClient is IOVMClient, AccessControlEnumerable {
     }
 
     /// @inheritdoc IOVMClient
-    function getOVMTaskAddress() public view virtual override returns (address) {
-        return _OVMTasks;
+    function getOVMGatewayAddress() public view virtual override returns (address) {
+        return _OVMGateway;
     }
 
     /**
@@ -129,7 +129,7 @@ abstract contract OVMClient is IOVMClient, AccessControlEnumerable {
         // calculate royalty, 1 basis point is 0.01%
         // the royalty will be deducted from the payment
         uint256 royalty = (payment * _specification.royalty) / DENOMINATOR;
-        requestId = IOVMTasks(_OVMTasks).sendRequest{value: payment - royalty}(
+        requestId = IOVMGateway(_OVMGateway).sendRequest{value: payment - royalty}(
             requester, address(this), deterministic, data
         );
         // mark the request as pending

@@ -3,20 +3,20 @@ pragma solidity 0.8.24;
 
 import {ExecMode, GPUModel, Requirement, Specification} from "../src/libraries/DataTypes.sol";
 import {SpecificationUpdated} from "../src/libraries/Events.sol";
-import {MockOVMTasks} from "./mocks/MockOVMTasks.sol";
+import {MockOVMGateway} from "./mocks/MockOVMGateway.sol";
 import {OVMClientImpl} from "./mocks/OVMClientImpl.sol";
 
 import {Test} from "forge-std/Test.sol";
 
 contract OVMClientTest is Test {
-    MockOVMTasks public mockTasks;
+    MockOVMGateway public mockTasks;
     OVMClientImpl public ovmClient;
 
     address public constant alice = address(0x1111);
     address public constant bob = address(0x2222);
 
     function setUp() public {
-        mockTasks = new MockOVMTasks();
+        mockTasks = new MockOVMGateway();
         ovmClient = new OVMClientImpl(address(mockTasks), alice);
     }
 
@@ -105,7 +105,7 @@ contract OVMClientTest is Test {
         bytes32 requestId = mockTasks.mockRequestId();
         bytes memory response = bytes("3.1415926");
 
-        vm.expectRevert("Caller is not the OVMTasks contract");
+        vm.expectRevert("Caller is not the OVMGateway contract");
 
         ovmClient.setResponse(requestId, response);
     }

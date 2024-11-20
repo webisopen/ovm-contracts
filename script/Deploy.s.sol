@@ -2,7 +2,7 @@
 // solhint-disable no-console,ordering,custom-errors
 pragma solidity 0.8.24;
 
-import {OVMTasks} from "../src/OVMTasks.sol";
+import {OVMGateway} from "../src/OVMGateway.sol";
 import {DeployConfig} from "./DeployConfig.s.sol";
 import {Deployer} from "./Deployer.sol";
 import {TransparentUpgradeableProxy} from
@@ -44,7 +44,7 @@ contract Deploy is Deployer {
 
     /// @notice Deploy all of the proxies
     function deployProxies() public {
-        deployProxy("OVMTasks");
+        deployProxy("OVMGateway");
     }
 
     function deployProxy(string memory name_) public broadcast returns (address addr_) {
@@ -64,15 +64,15 @@ contract Deploy is Deployer {
 
     /// @notice Deploy all of the logic contracts
     function deployImplementations() public broadcast {
-        deployOVMTasks();
+        deployOVMGateway();
     }
 
-    function deployOVMTasks() public returns (address addr) {
-        console.log("Deploying OVMTasks.sol");
-        OVMTasks tasks = new OVMTasks();
+    function deployOVMGateway() public returns (address addr) {
+        console.log("Deploying OVMGateway.sol");
+        OVMGateway tasks = new OVMGateway();
 
-        save("OVMTasks", address(tasks));
-        console.log("OVMTasks deployed at %s", address(tasks));
+        save("OVMGateway", address(tasks));
+        console.log("OVMGateway deployed at %s", address(tasks));
         addr = address(tasks);
     }
 }
