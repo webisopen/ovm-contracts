@@ -4,10 +4,10 @@ pragma solidity 0.8.24;
 import {Commitment, Specification} from "../libraries/DataTypes.sol";
 
 /**
- * @title OVMTasks
- * @notice The OVMTasks contract interface.
+ * @title OVMGateway
+ * @notice The OVMGateway contract interface.
  */
-interface IOVMTasks {
+interface IOVMGateway {
     /**
      * @dev Sends a request to execute a task.
      * @param requester The address of the requester.

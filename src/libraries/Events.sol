@@ -3,7 +3,7 @@ pragma solidity 0.8.24;
 
 import {Specification} from "./DataTypes.sol";
 
-// events for the OVMTasks contract
+// events for the OVMGateway contract
 /**
  * @dev Emitted on sendRequest()
  * @param requester The address of the requester.

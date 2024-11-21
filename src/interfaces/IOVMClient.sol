@@ -16,7 +16,7 @@ interface IOVMClient {
     function cancelRequest(bytes32 requestId) external;
 
     /**
-     * @dev Sets the response data for a specific request. This function is called by the OVMTasks
+     * @dev Sets the response data for a specific request. This function is called by the OVMGateway
      * contract.
      * @param requestId The ID of the request.
      * @param data The response data to be set.
@@ -48,8 +48,8 @@ interface IOVMClient {
     function getSpecification() external view returns (Specification memory);
 
     /**
-     * @notice Get the address of the OVMTasks contract.
-     * @return The address of the OVMTasks contract.
+     * @notice Get the address of the OVMGateway contract.
+     * @return The address of the OVMGateway contract.
      */
-    function getOVMTaskAddress() external view returns (address);
+    function getOVMGatewayAddress() external view returns (address);
 }

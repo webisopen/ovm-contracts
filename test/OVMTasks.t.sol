@@ -2,7 +2,7 @@
 pragma solidity 0.8.24;
 
 import {DeployConfig} from "../script/DeployConfig.s.sol";
-import {OVMTasks} from "../src/OVMTasks.sol";
+import {OVMGateway} from "../src/OVMGateway.sol";
 import {Commitment} from "../src/libraries/DataTypes.sol";
 import {
     CallbackAddressIsNotContract,
@@ -16,9 +16,9 @@ import {TransparentUpgradeableProxy} from
     "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol";
 import {Test} from "forge-std/Test.sol";
 
-contract OVMTasksTest is Test {
+contract OVMGatewayTest is Test {
     OVMClientImpl public ovmClient;
-    OVMTasks public tasks;
+    OVMGateway public tasks;
 
     address public constant nodeOperator = address(0xaaaa);
     address public constant alice = address(0x1111);
@@ -29,11 +29,11 @@ contract OVMTasksTest is Test {
         string memory path = string.concat(vm.projectRoot(), "/deploy-config/", "local" ".json");
         _cfg = new DeployConfig(path);
 
-        // deploy OVMTasks contract
-        OVMTasks tasksImpl = new OVMTasks();
+        // deploy OVMGateway contract
+        OVMGateway tasksImpl = new OVMGateway();
         TransparentUpgradeableProxy tasksProxy =
             new TransparentUpgradeableProxy(address(tasksImpl), _cfg.proxyAdminOwner(), "");
-        tasks = OVMTasks(payable(tasksProxy));
+        tasks = OVMGateway(payable(tasksProxy));
 
         ovmClient = new OVMClientImpl(address(tasks), _cfg.templateAdmin());
     }
@@ -158,7 +158,7 @@ contract OVMTasksTest is Test {
         // check balances
         vm.assertEq(address(tasks).balance, 0);
         vm.assertEq(
-            nodeOperator.balance, payment * (10000 - ovmClient.getSpecification().royalty) / 10000
+            nodeOperator.balance, (payment * (10000 - ovmClient.getSpecification().royalty)) / 10000
         );
     }
 

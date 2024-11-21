@@ -3,7 +3,7 @@
 pragma solidity 0.8.24;
 
 import {IOVMClient} from "./interfaces/IOVMClient.sol";
-import {IOVMTasks} from "./interfaces/IOVMTasks.sol";
+import {IOVMGateway} from "./interfaces/IOVMGateway.sol";
 import {Commitment, Specification} from "./libraries/DataTypes.sol";
 import {
     CallbackAddressIsNotContract,
@@ -18,7 +18,7 @@ import {Address} from "@openzeppelin/contracts/utils/Address.sol";
  * THIS EXAMPLE USES UN-AUDITED CODE.
  * DO NOT USE THIS CODE IN PRODUCTION.
  */
-contract OVMTasks is IOVMTasks {
+contract OVMGateway is IOVMGateway {
     using Address for address;
 
     /// @dev The time after which a request can be canceled
@@ -31,7 +31,7 @@ contract OVMTasks is IOVMTasks {
     /// @dev Tokens sent for requests that have not been fulfilled yet
     uint256 internal _tokensInEscrow;
 
-    /// @inheritdoc IOVMTasks
+    /// @inheritdoc IOVMGateway
     function sendRequest(
         address requester,
         address callbackAddress,
@@ -43,7 +43,9 @@ contract OVMTasks is IOVMTasks {
         uint256 cancelExpiration = block.timestamp + EXPIRYTIME;
 
         // check if the callbackAddress is a contract
-        if (callbackAddress.code.length == 0) revert CallbackAddressIsNotContract(callbackAddress);
+        if (callbackAddress.code.length == 0) {
+            revert CallbackAddressIsNotContract(callbackAddress);
+        }
 
         // save the commitment
         _commitments[requestId] = Commitment({
@@ -60,7 +62,7 @@ contract OVMTasks is IOVMTasks {
         );
     }
 
-    /// @inheritdoc IOVMTasks
+    /// @inheritdoc IOVMGateway
     function cancelRequest(bytes32 requestId) external override {
         Commitment memory commitment = _commitments[requestId];
 
@@ -69,7 +71,9 @@ contract OVMTasks is IOVMTasks {
             revert InvalidRequesterOrCallback(tx.origin, msg.sender);
         }
         //  the request can only be canceled after the expiration time
-        if (block.timestamp < commitment.cancelExpiration) revert RequestNotExpired();
+        if (block.timestamp < commitment.cancelExpiration) {
+            revert RequestNotExpired();
+        }
 
         // delete the commitment
         delete _commitments[requestId];
@@ -81,7 +85,7 @@ contract OVMTasks is IOVMTasks {
         _transfer(commitment.requester, commitment.payment);
     }
 
-    /// @inheritdoc IOVMTasks
+    /// @inheritdoc IOVMGateway
     function setResponse(bytes32 requestId, bytes calldata data) external override {
         Commitment memory commitment = _commitments[requestId];
 
@@ -101,7 +105,7 @@ contract OVMTasks is IOVMTasks {
         );
     }
 
-    /// @inheritdoc IOVMTasks
+    /// @inheritdoc IOVMGateway
     function getSpecification(address callbackAddress)
         external
         view
@@ -111,12 +115,12 @@ contract OVMTasks is IOVMTasks {
         return IOVMClient(callbackAddress).getSpecification();
     }
 
-    /// @inheritdoc IOVMTasks
+    /// @inheritdoc IOVMGateway
     function getCommitments(bytes32 requestId) external view override returns (Commitment memory) {
         return _commitments[requestId];
     }
 
-    /// @inheritdoc IOVMTasks
+    /// @inheritdoc IOVMGateway
     function getRequestsCount() external view override returns (uint256) {
         return _requestCount;
     }

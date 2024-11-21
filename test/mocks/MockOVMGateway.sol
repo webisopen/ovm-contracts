@@ -3,7 +3,7 @@ pragma solidity 0.8.24;
 
 import {Address} from "@openzeppelin/contracts/utils/Address.sol";
 
-contract MockOVMTasks {
+contract MockOVMGateway {
     using Address for address;
 
     bytes32 public mockRequestId = keccak256(abi.encodePacked(address(this), uint256(1)));
