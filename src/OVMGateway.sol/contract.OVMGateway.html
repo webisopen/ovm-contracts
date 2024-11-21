@@ -1,45 +1,47 @@
 <!DOCTYPE HTML>
-<html lang="en" class="light" dir="ltr">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>IOVMTasks</title>
+        <title>OVMGateway</title>
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../../../favicon.svg">
-        <link rel="shortcut icon" href="../../../favicon.png">
-        <link rel="stylesheet" href="../../../css/variables.css">
-        <link rel="stylesheet" href="../../../css/general.css">
-        <link rel="stylesheet" href="../../../css/chrome.css">
-        <link rel="stylesheet" href="../../../css/print.css" media="print">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../../../fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../../../highlight.css">
-        <link rel="stylesheet" href="../../../tomorrow-night.css">
-        <link rel="stylesheet" href="../../../ayu-highlight.css">
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../../../book.css">
+        <link rel="stylesheet" href="../../book.css">
 
-    </head>
-    <body class="sidebar-visible no-js">
-    <div id="body-container">
+
         <!-- Provide site root to javascript -->
         <script>
-            var path_to_root = "../../../";
+            var path_to_root = "../../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
-
+        <!-- Start loading toc.js asap -->
+        <script src="../../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
@@ -61,19 +63,16 @@
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            var body = document.querySelector('body');
-            body.classList.remove('no-js')
-            body.classList.add('js');
+            html.classList.add("js");
         </script>
 
         <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var body = document.querySelector('body');
             var sidebar = null;
             var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
@@ -83,45 +82,25 @@
                 sidebar = 'hidden';
             }
             sidebar_toggle.checked = sidebar === 'visible';
-            body.classList.remove('sidebar-visible');
-            body.classList.add("sidebar-" + sidebar);
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="../../../index.html">Home</a></li><li class="chapter-item affix "><li class="part-title">src</li><li class="chapter-item expanded "><a href="../../../src/interfaces/index.html">❱ interfaces</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../src/interfaces/IOVMClient.sol/interface.IOVMClient.html">IOVMClient</a></li><li class="chapter-item expanded "><a href="../../../src/interfaces/IOVMTasks.sol/interface.IOVMTasks.html" class="active">IOVMTasks</a></li></ol></li><li class="chapter-item "><a href="../../../src/libraries/index.html">❱ libraries</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../src/libraries/DataTypes.sol/enum.ExecMode.html">ExecMode</a></li><li class="chapter-item "><a href="../../../src/libraries/DataTypes.sol/enum.GPUModel.html">GPUModel</a></li><li class="chapter-item "><a href="../../../src/libraries/DataTypes.sol/struct.Requirement.html">Requirement</a></li><li class="chapter-item "><a href="../../../src/libraries/DataTypes.sol/enum.Arch.html">Arch</a></li><li class="chapter-item "><a href="../../../src/libraries/DataTypes.sol/struct.Specification.html">Specification</a></li><li class="chapter-item "><a href="../../../src/libraries/DataTypes.sol/struct.Commitment.html">Commitment</a></li><li class="chapter-item "><a href="../../../src/libraries/Errors.sol/error.TransferFailed.html">TransferFailed</a></li><li class="chapter-item "><a href="../../../src/libraries/Errors.sol/error.RequestNotExpired.html">RequestNotExpired</a></li><li class="chapter-item "><a href="../../../src/libraries/Errors.sol/error.InvalidRequesterOrCallback.html">InvalidRequesterOrCallback</a></li><li class="chapter-item "><a href="../../../src/libraries/Errors.sol/error.CallbackAddressIsNotContract.html">CallbackAddressIsNotContract</a></li><li class="chapter-item "><a href="../../../src/libraries/Events.sol/event.TaskRequestSent.html">TaskRequestSent</a></li><li class="chapter-item "><a href="../../../src/libraries/Events.sol/event.TaskRequestCanceled.html">TaskRequestCanceled</a></li><li class="chapter-item "><a href="../../../src/libraries/Events.sol/event.TaskResponseSet.html">TaskResponseSet</a></li><li class="chapter-item "><a href="../../../src/libraries/Events.sol/event.SpecificationUpdated.html">SpecificationUpdated</a></li><li class="chapter-item "><a href="../../../src/libraries/Events.sol/event.ResponseRecorded.html">ResponseRecorded</a></li></ol></li><li class="chapter-item "><a href="../../../src/OVMClient.sol/abstract.OVMClient.html">OVMClient</a></li><li class="chapter-item "><a href="../../../src/OVMTasks.sol/contract.OVMTasks.html">OVMTasks</a></li></ol>
-            </div>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+            </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
             </div>
         </nav>
 
-        <!-- Track and set sidebar scroll position -->
-        <script>
-            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
-            sidebarScrollbox.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A') {
-                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
-                }
-            }, { passive: true });
-            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
-            sessionStorage.removeItem('sidebar-scroll');
-            if (sidebarScrollTop) {
-                // preserve sidebar scroll position when navigating via links within sidebar
-                sidebarScrollbox.scrollTop = sidebarScrollTop;
-            } else {
-                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
-                var activeSection = document.querySelector('#sidebar .active');
-                if (activeSection) {
-                    activeSection.scrollIntoView({ block: 'center' });
-                }
-            }
-        </script>
-
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -145,7 +124,7 @@
                     <h1 class="menu-title"></h1>
 
                     <div class="right-buttons">
-                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         <a href="https://github.com/webisopen/ovm-contracts" title="Git repository" aria-label="Git repository">
@@ -177,9 +156,29 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="iovmtasks"><a class="header" href="#iovmtasks">IOVMTasks</a></h1>
-<p><a href="https://github.com/webisopen/ovm-contracts/blob/9b4a653b856da3807cafb26294a656b6a8413a90/src/interfaces/IOVMTasks.sol">Git Source</a></p>
-<p>The OVMTasks contract interface.</p>
+                        <h1 id="ovmgateway"><a class="header" href="#ovmgateway">OVMGateway</a></h1>
+<p><a href="https://github.com/webisopen/ovm-contracts/blob/ef69f644c788557d8a1f3d91e4f4e56917864af2/src/OVMGateway.sol">Git Source</a></p>
+<p><strong>Inherits:</strong>
+<a href="/src/interfaces/IOVMGateway.sol/interface.IOVMGateway.html">IOVMGateway</a></p>
+<p>THIS IS AN EXAMPLE CONTRACT WHICH USES HARDCODED VALUES FOR CLARITY.
+THIS EXAMPLE USES UN-AUDITED CODE.
+DO NOT USE THIS CODE IN PRODUCTION.</p>
+<h2 id="state-variables"><a class="header" href="#state-variables">State Variables</a></h2>
+<h3 id="expirytime"><a class="header" href="#expirytime">EXPIRYTIME</a></h3>
+<p><em>The time after which a request can be canceled</em></p>
+<pre><code class="language-solidity">uint256 public constant EXPIRYTIME = 5 minutes;
+</code></pre>
+<h3 id="_requestcount"><a class="header" href="#_requestcount">_requestCount</a></h3>
+<pre><code class="language-solidity">uint256 internal _requestCount;
+</code></pre>
+<h3 id="_commitments"><a class="header" href="#_commitments">_commitments</a></h3>
+<p><em>a commitment is a request that has not been fulfilled yet</em></p>
+<pre><code class="language-solidity">mapping(bytes32 requestId =&gt; Commitment commitment) internal _commitments;
+</code></pre>
+<h3 id="_tokensinescrow"><a class="header" href="#_tokensinescrow">_tokensInEscrow</a></h3>
+<p><em>Tokens sent for requests that have not been fulfilled yet</em></p>
+<pre><code class="language-solidity">uint256 internal _tokensInEscrow;
+</code></pre>
 <h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
 <h3 id="sendrequest"><a class="header" href="#sendrequest">sendRequest</a></h3>
 <p><em>Sends a request to execute a task.</em></p>
@@ -188,7 +187,7 @@
     address callbackAddress,
     bool deterministic,
     bytes calldata data
-) external payable returns (bytes32 requestId);
+) external payable override returns (bytes32 requestId);
 </code></pre>
 <p><strong>Parameters</strong></p>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
@@ -205,7 +204,7 @@
 </div>
 <h3 id="cancelrequest"><a class="header" href="#cancelrequest">cancelRequest</a></h3>
 <p>Cancels a request.</p>
-<pre><code class="language-solidity">function cancelRequest(bytes32 requestId) external;
+<pre><code class="language-solidity">function cancelRequest(bytes32 requestId) external override;
 </code></pre>
 <p><strong>Parameters</strong></p>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
@@ -214,7 +213,7 @@
 </div>
 <h3 id="setresponse"><a class="header" href="#setresponse">setResponse</a></h3>
 <p><em>Sets the response for a given requestId.</em></p>
-<pre><code class="language-solidity">function setResponse(bytes32 requestId, bytes calldata data) external;
+<pre><code class="language-solidity">function setResponse(bytes32 requestId, bytes calldata data) external override;
 </code></pre>
 <p><strong>Parameters</strong></p>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
@@ -224,7 +223,11 @@
 </div>
 <h3 id="getspecification"><a class="header" href="#getspecification">getSpecification</a></h3>
 <p>Gets the specification of the callback contract.</p>
-<pre><code class="language-solidity">function getSpecification(address callbackAddress) external view returns (Specification memory);
+<pre><code class="language-solidity">function getSpecification(address callbackAddress)
+    external
+    view
+    override
+    returns (Specification memory);
 </code></pre>
 <p><strong>Parameters</strong></p>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
@@ -238,7 +241,7 @@
 </div>
 <h3 id="getcommitments"><a class="header" href="#getcommitments">getCommitments</a></h3>
 <p>Gets the commitments of a request.</p>
-<pre><code class="language-solidity">function getCommitments(bytes32 requestId) external view returns (Commitment memory);
+<pre><code class="language-solidity">function getCommitments(bytes32 requestId) external view override returns (Commitment memory);
 </code></pre>
 <p><strong>Parameters</strong></p>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
@@ -252,24 +255,28 @@
 </div>
 <h3 id="getrequestscount"><a class="header" href="#getrequestscount">getRequestsCount</a></h3>
 <p>Gets the number of requests.</p>
-<pre><code class="language-solidity">function getRequestsCount() external view returns (uint256);
+<pre><code class="language-solidity">function getRequestsCount() external view override returns (uint256);
 </code></pre>
 <p><strong>Returns</strong></p>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>&lt;none&gt;</code></td><td><code>uint256</code></td><td>count The number of requests.</td></tr>
 </tbody></table>
 </div>
+<h3 id="_transfer"><a class="header" href="#_transfer">_transfer</a></h3>
+<p><em>transfer native tokens by a low-level call.
+_transfer should always be at the end of the function,
+to apply the checks-effects-interactions pattern</em></p>
+<pre><code class="language-solidity">function _transfer(address to, uint256 amount) internal;
+</code></pre>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../../src/interfaces/IOVMClient.sol/interface.IOVMClient.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../src/OVMClient.sol/abstract.OVMClient.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../../src/libraries/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -277,13 +284,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../../src/interfaces/IOVMClient.sol/interface.IOVMClient.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../src/OVMClient.sol/abstract.OVMClient.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../../src/libraries/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
             </nav>
 
         </div>
@@ -296,16 +300,16 @@
         </script>
 
 
-        <script src="../../../elasticlunr.min.js"></script>
-        <script src="../../../mark.min.js"></script>
-        <script src="../../../searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="../../../clipboard.min.js"></script>
-        <script src="../../../highlight.js"></script>
-        <script src="../../../book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../../../solidity.min.js"></script>
+        <script src="../../solidity.min.js"></script>
 
 
     </div>
