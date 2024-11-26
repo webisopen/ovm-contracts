@@ -56,6 +56,7 @@ forge script script/Deploy.s.sol:Deploy \
 --verifier-url $VERIFIER_URL \
 --verifier $VERIFIER \
 --verify \
+--etherscan-api-key $ETHERSCAN_API_KEY \
 --broadcast --ffi -vvvv
 
 # Without verification
