@@ -18,7 +18,7 @@ contract OVMClientTest is Test {
     function setUp() public {
         mockTasks = new MockOVMGateway();
         ovmClient = new OVMClientImpl(address(mockTasks));
-        ovmClient.initialize(alice, 1);
+        ovmClient.initialize(alice);
     }
 
     function testRequest() public {

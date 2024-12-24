@@ -16,7 +16,7 @@ contract OVMClientImpl is OVMClient {
     constructor(address OVMGatewayAddress) OVMClient(OVMGatewayAddress) {}
 
     function initialize(address admin) external initializer {
-        super.initialize(admin, 1);
+        super._OVMClient_initialize(admin);
     }
 
     /**

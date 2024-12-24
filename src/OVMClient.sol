@@ -61,9 +61,8 @@ abstract contract OVMClient is IOVMClient, AccessControlEnumerable, Initializabl
     /**
      * @dev Initializes the contract by setting up the admin role
      * @param admin The address that will be granted the admin role
-     * @param version The version number for this initialization
      */
-    function initialize(address admin, uint8 version) public reinitializer(version) {
+    function _OVMClient_initialize(address admin) internal {
         _grantRole(ADMIN_ROLE, admin);
     }
 
