@@ -6,6 +6,8 @@ import {IOVMClient} from "./interfaces/IOVMClient.sol";
 import {IOVMGateway} from "./interfaces/IOVMGateway.sol";
 import {Specification} from "./libraries/DataTypes.sol";
 import {ResponseRecorded, SpecificationUpdated} from "./libraries/Events.sol";
+
+import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import {AccessControlEnumerable} from
     "@openzeppelin/contracts/access/extensions/AccessControlEnumerable.sol";
 
@@ -14,7 +16,7 @@ import {AccessControlEnumerable} from
  * THIS EXAMPLE USES UN-AUDITED CODE.
  * DO NOT USE THIS CODE IN PRODUCTION.
  */
-abstract contract OVMClient is IOVMClient, AccessControlEnumerable {
+abstract contract OVMClient is IOVMClient, AccessControlEnumerable, Initializable {
     /// @dev `ADMIN_ROLE` is the role that can do permissioned operations, such as updating the tax,
     /// update the specification, withdrawing funds.
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
@@ -52,9 +54,16 @@ abstract contract OVMClient is IOVMClient, AccessControlEnumerable {
     }
 
     // Constructor
-    constructor(address OVMGateway, address admin) {
+    constructor(address OVMGateway) {
         _OVMGateway = OVMGateway;
+    }
 
+    /**
+     * @dev Initializes the contract by setting up the admin role
+     * @param admin The address that will be granted the admin role
+     * @param version The version number for this initialization
+     */
+    function initialize(address admin, uint8 version) public reinitializer(version) {
         _grantRole(ADMIN_ROLE, admin);
     }
 

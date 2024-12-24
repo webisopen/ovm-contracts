@@ -12,9 +12,12 @@ contract OVMClientImpl is OVMClient {
     /**
      * @dev Constructor function for the PI contract.
      * @param OVMGatewayAddress The address of the OVMGateway contract.
-     * @param admin The address of the admin.
      */
-    constructor(address OVMGatewayAddress, address admin) OVMClient(OVMGatewayAddress, admin) {}
+    constructor(address OVMGatewayAddress) OVMClient(OVMGatewayAddress) {}
+
+    function initialize(address admin) external initializer {
+        super.initialize(admin, 1);
+    }
 
     /**
      * @dev Sends a request to calculate the value of PI with a specified number of digits.

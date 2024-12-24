@@ -35,7 +35,10 @@ contract OVMGatewayTest is Test {
             new TransparentUpgradeableProxy(address(tasksImpl), _cfg.proxyAdminOwner(), "");
         tasks = OVMGateway(payable(tasksProxy));
 
-        ovmClient = new OVMClientImpl(address(tasks), _cfg.templateAdmin());
+        // Initialize the OVMGateway contract
+
+        ovmClient = new OVMClientImpl(address(tasks));
+        ovmClient.initialize(_cfg.templateAdmin(), 1);
     }
 
     function testRequest() public {
