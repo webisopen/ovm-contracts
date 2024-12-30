@@ -18,6 +18,13 @@ contract OVMClientTest is Test {
     function setUp() public {
         mockTasks = new MockOVMGateway();
         ovmClient = new OVMClientImpl();
+
+        uint256 openChainTestnetId = 57770793173;
+        address expectedAddress = 0xbb2F7085Ad69653B8574121A549e247B24C64f25;
+
+        vm.chainId(openChainTestnetId);
+        assertEq(ovmClient.getOVMGatewayAddress(), expectedAddress);
+
         ovmClient.initialize(address(mockTasks));
     }
 
