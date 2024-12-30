@@ -2,21 +2,15 @@
 // solhint-disable var-name-mixedcase,quotes,comprehensive-interface
 pragma solidity 0.8.24;
 
-import {OVMClient} from "../../src/OVMClient.sol";
+import {OVMClient, Specification} from "../../src/OVMClient.sol";
 
 contract OVMClientImpl is OVMClient {
     bool public constant REQ_DETERMINISTIC = true;
 
     mapping(bytes32 requestId => bytes data) internal _responseData;
 
-    /**
-     * @dev Constructor function for the PI contract.
-     * @param OVMGatewayAddress The address of the OVMGateway contract.
-     */
-    constructor(address OVMGatewayAddress) OVMClient(OVMGatewayAddress) {}
-
-    function initialize(address admin) external initializer {
-        super._OVMClient_initialize(admin);
+    function initialize(address OVMGateway) external {
+        _updateOVMGatewayAddress(OVMGateway);
     }
 
     /**
@@ -46,5 +40,9 @@ contract OVMClientImpl is OVMClient {
         onlyOVMGateway
     {
         _responseData[requestId] = data;
+    }
+
+    function updateSpecification(Specification calldata newSpec) external {
+        _updateSpecification(newSpec);
     }
 }

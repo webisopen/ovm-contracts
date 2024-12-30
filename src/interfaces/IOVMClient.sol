@@ -24,17 +24,6 @@ interface IOVMClient {
     function setResponse(bytes32 requestId, bytes calldata data) external;
 
     /**
-     * @dev Updates the specification of the OVM client.
-     * @param newSpec The new specification to update.
-     */
-    function updateSpecification(Specification calldata newSpec) external;
-
-    /**
-     * @notice Withdraws the contract's balance to the contract owner.
-     */
-    function withdraw() external;
-
-    /**
      * @notice Checks if a request is pending.
      * @param requestId The ID of the request.
      * @return isPending True if the request is pending, otherwise false.

@@ -36,9 +36,8 @@ contract OVMGatewayTest is Test {
         tasks = OVMGateway(payable(tasksProxy));
 
         // Initialize the OVMGateway contract
-
-        ovmClient = new OVMClientImpl(address(tasks));
-        ovmClient.initialize(_cfg.templateAdmin());
+        ovmClient = new OVMClientImpl();
+        ovmClient.initialize(address(tasks));
     }
 
     function testRequest() public {

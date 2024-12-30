@@ -7,23 +7,16 @@ import {IOVMGateway} from "./interfaces/IOVMGateway.sol";
 import {Specification} from "./libraries/DataTypes.sol";
 import {ResponseRecorded, SpecificationUpdated} from "./libraries/Events.sol";
 
-import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import {AccessControlEnumerable} from
-    "@openzeppelin/contracts/access/extensions/AccessControlEnumerable.sol";
-
 /**
  * THIS IS AN EXAMPLE CONTRACT WHICH USES HARDCODED VALUES FOR CLARITY.
  * THIS EXAMPLE USES UN-AUDITED CODE.
  * DO NOT USE THIS CODE IN PRODUCTION.
  */
-abstract contract OVMClient is IOVMClient, AccessControlEnumerable, Initializable {
-    /// @dev `ADMIN_ROLE` is the role that can do permissioned operations, such as updating the tax,
-    /// update the specification, withdrawing funds.
-    bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
+abstract contract OVMClient is IOVMClient {
     uint96 public constant DENOMINATOR = 10000;
 
     /// @dev address of the OVMGateway contract
-    address private immutable _OVMGateway;
+    address private _OVMGateway;
     /// @dev pending requests are requests that are not yet responded by the OVM task contract
     mapping(bytes32 requestId => bool isPending) private _pendingRequests;
 
@@ -42,49 +35,19 @@ abstract contract OVMClient is IOVMClient, AccessControlEnumerable, Initializabl
         _;
     }
 
-    modifier onlyAdmin() {
-        require(hasRole(ADMIN_ROLE, msg.sender), "Caller is not an admin");
-        _;
-    }
-
     /* @notice It is supposed to be used along with setResponse */
     modifier onlyOVMGateway() {
-        require(msg.sender == _OVMGateway, "Caller is not the OVMGateway contract");
+        address ovmGateway = _getOVMGatewayAddress();
+        require(ovmGateway != address(0), "OVMGateway is not set");
+        require(msg.sender == ovmGateway, "Caller is not the OVMGateway contract");
         _;
-    }
-
-    // Constructor
-    constructor(address OVMGateway) {
-        _OVMGateway = OVMGateway;
-    }
-
-    /**
-     * @dev Initializes the contract by setting up the admin role
-     * @param admin The address that will be granted the admin role
-     */
-    function _OVMClient_initialize(address admin) internal {
-        _grantRole(ADMIN_ROLE, admin);
     }
 
     /// @inheritdoc IOVMClient
     function cancelRequest(bytes32 requestId) public virtual override {
-        IOVMGateway(_OVMGateway).cancelRequest(requestId);
+        address ovmGateway = _getOVMGatewayAddress();
+        IOVMGateway(ovmGateway).cancelRequest(requestId);
         _removePendingRequest(requestId);
-    }
-
-    /// @inheritdoc IOVMClient
-    function updateSpecification(Specification calldata newSpec)
-        public
-        virtual
-        override
-        onlyAdmin
-    {
-        _updateSpecification(newSpec);
-    }
-
-    /// @inheritdoc IOVMClient
-    function withdraw() public virtual override onlyAdmin {
-        payable(msg.sender).transfer(address(this).balance);
     }
 
     /// @inheritdoc IOVMClient
@@ -99,7 +62,7 @@ abstract contract OVMClient is IOVMClient, AccessControlEnumerable, Initializabl
 
     /// @inheritdoc IOVMClient
     function getOVMGatewayAddress() public view virtual override returns (address) {
-        return _OVMGateway;
+        return _getOVMGatewayAddress();
     }
 
     /**
@@ -137,7 +100,8 @@ abstract contract OVMClient is IOVMClient, AccessControlEnumerable, Initializabl
         // calculate royalty, 1 basis point is 0.01%
         // the royalty will be deducted from the payment
         uint256 royalty = (payment * _specification.royalty) / DENOMINATOR;
-        requestId = IOVMGateway(_OVMGateway).sendRequest{value: payment - royalty}(
+        address ovmGateway = _getOVMGatewayAddress();
+        requestId = IOVMGateway(ovmGateway).sendRequest{value: payment - royalty}(
             requester, address(this), deterministic, data
         );
         // mark the request as pending
@@ -150,5 +114,35 @@ abstract contract OVMClient is IOVMClient, AccessControlEnumerable, Initializabl
      */
     function _removePendingRequest(bytes32 requestId) internal virtual {
         delete _pendingRequests[requestId];
+    }
+
+    /**
+     * @dev Update the address of the OVMGateway contract
+     * @param OVMGateway The address of the OVMGateway contract
+     */
+    function _updateOVMGatewayAddress(address OVMGateway) internal {
+        _OVMGateway = OVMGateway;
+    }
+
+    /**
+     * @dev Get the address of the OVMGateway contract
+     * @return The address of the OVMGateway contract
+     */
+    function _getOVMGatewayAddress() internal view returns (address) {
+        if (_OVMGateway != address(0)) {
+            return _OVMGateway;
+        }
+
+        uint256 chainId;
+        assembly {
+            chainId := chainid()
+        }
+
+        // OpenChain Testnet
+        if (chainId == 57770793173) {
+            return 0xbb2F7085Ad69653B8574121A549e247B24C64f25; // 替换为特定链上的固定地址
+        } else {
+            return address(0);
+        }
     }
 }

@@ -17,8 +17,8 @@ contract OVMClientTest is Test {
 
     function setUp() public {
         mockTasks = new MockOVMGateway();
-        ovmClient = new OVMClientImpl(address(mockTasks));
-        ovmClient.initialize(alice);
+        ovmClient = new OVMClientImpl();
+        ovmClient.initialize(address(mockTasks));
     }
 
     function testRequest() public {
@@ -85,9 +85,6 @@ contract OVMClientTest is Test {
         vm.assertEq(address(ovmClient).balance, (100 ether * newTaxBasisPoint) / _denominator());
 
         vm.prank(admin);
-        ovmClient.withdraw();
-        vm.assertEq(address(ovmClient).balance, 0);
-        vm.assertEq(admin.balance, (100 ether * newTaxBasisPoint) / _denominator());
     }
 
     function testSetResponse() public {
