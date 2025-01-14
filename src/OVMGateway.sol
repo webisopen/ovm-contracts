@@ -86,7 +86,14 @@ contract OVMGateway is IOVMGateway {
     }
 
     /// @inheritdoc IOVMGateway
-    function setResponse(bytes32 requestId, bytes calldata data) external override {
+    function setResponse(
+        bytes32 requestId,
+        bytes calldata data,
+        string calldata envProof,
+        string calldata inputProof,
+        string calldata outputProof,
+        string calldata rootProof
+    ) external override {
         Commitment memory commitment = _commitments[requestId];
 
         // free up the escrowed funds
@@ -94,7 +101,7 @@ contract OVMGateway is IOVMGateway {
         // delete the commitment
         delete _commitments[requestId];
 
-        emit TaskResponseSet(requestId, data);
+        emit TaskResponseSet(requestId, data, envProof, inputProof, outputProof, rootProof);
 
         // transfer the payment to caller
         _transfer(msg.sender, commitment.payment);

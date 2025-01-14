@@ -34,8 +34,19 @@ interface IOVMGateway {
      * @dev Sets the response for a given requestId.
      * @param requestId The unique identifier for the request.
      * @param data The response data to be set.
+     * @param envProof The environment proof to be set.
+     * @param inputProof The input proof to be set.
+     * @param outputProof The output proof to be set.
+     * @param rootProof The root proof to be set.
      */
-    function setResponse(bytes32 requestId, bytes calldata data) external;
+    function setResponse(
+        bytes32 requestId,
+        bytes calldata data,
+        string calldata envProof,
+        string calldata inputProof,
+        string calldata outputProof,
+        string calldata rootProof
+    ) external;
 
     /**
      * @notice Gets the specification of the callback contract.

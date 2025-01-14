@@ -148,12 +148,16 @@ contract OVMGatewayTest is Test {
         bytes32 requestId = ovmClient.sendRequestCalculatePI{value: payment}(7);
 
         bytes memory data = abi.encode(true, "3.1415");
+        string memory envProof = "env_proof_data";
+        string memory inputProof = "input_proof_data";
+        string memory outputProof = "output_proof_data";
+        string memory rootProof = "root_proof_data";
 
         // set response
         vm.expectEmit(true, true, true, true);
-        emit TaskResponseSet(requestId, data);
+        emit TaskResponseSet(requestId, data, envProof, inputProof, outputProof, rootProof);
         vm.prank(nodeOperator);
-        tasks.setResponse(requestId, data);
+        tasks.setResponse(requestId, data, envProof, inputProof, outputProof, rootProof);
 
         // check status
         _assertEmptyCommitment(requestId);
