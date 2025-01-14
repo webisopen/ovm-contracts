@@ -140,7 +140,7 @@ abstract contract OVMClient is IOVMClient {
 
         // OpenChain Testnet
         if (chainId == 57770793173) {
-            return 0xbb2F7085Ad69653B8574121A549e247B24C64f25; 
+            return 0xbb2F7085Ad69653B8574121A549e247B24C64f25;
         } else {
             return address(0);
         }
