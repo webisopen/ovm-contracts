@@ -35,7 +35,14 @@ event TaskRequestCanceled(bytes32 indexed requestId);
  * @param requestId The unique identifier of the request.
  * @param data The response data.
  */
-event TaskResponseSet(bytes32 indexed requestId, bytes data);
+event TaskResponseSet(
+    bytes32 indexed requestId,
+    bytes data,
+    string envProof,
+    string inputProof,
+    string outputProof,
+    string rootProof
+);
 
 // events for the OVMClient contract
 /**
