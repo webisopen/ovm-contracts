@@ -157,14 +157,25 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="taskresponseset"><a class="header" href="#taskresponseset">TaskResponseSet</a></h1>
-<p><a href="https://github.com/webisopen/ovm-contracts/blob/639550b6df0e86c9033a74864f4bdaadab08b76c/src/libraries/Events.sol">Git Source</a></p>
+<p><a href="https://github.com/webisopen/ovm-contracts/blob/b8bdcf5c893fa8f666e8d0683cb3ba3aa778b484/src/libraries/Events.sol">Git Source</a></p>
 <p><em>Emitted on setResponse()</em></p>
-<pre><code class="language-solidity">event TaskResponseSet(bytes32 indexed requestId, bytes data);
+<pre><code class="language-solidity">event TaskResponseSet(
+    bytes32 indexed requestId,
+    bytes data,
+    string envProof,
+    string inputProof,
+    string outputProof,
+    string rootProof
+);
 </code></pre>
 <p><strong>Parameters</strong></p>
 <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>requestId</code></td><td><code>bytes32</code></td><td>The unique identifier of the request.</td></tr>
 <tr><td><code>data</code></td><td><code>bytes</code></td><td>The response data.</td></tr>
+<tr><td><code>envProof</code></td><td><code>string</code></td><td></td></tr>
+<tr><td><code>inputProof</code></td><td><code>string</code></td><td></td></tr>
+<tr><td><code>outputProof</code></td><td><code>string</code></td><td></td></tr>
+<tr><td><code>rootProof</code></td><td><code>string</code></td><td></td></tr>
 </tbody></table>
 </div>
                     </main>
