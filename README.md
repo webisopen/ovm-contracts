@@ -4,7 +4,6 @@
 [![checks](https://github.com/webisopen/ovm-contracts/actions/workflows/checks.yml/badge.svg)](https://github.com/webisopen/ovm-contracts/actions/workflows/checks.yml)
 [![codecov](https://codecov.io/gh/webisopen/ovm-contracts/graph/badge.svg?token=Q0GMj4Epjx)](https://codecov.io/gh/webisopen/ovm-contracts)
 
-
 ## Usage
 
 ### Build
@@ -44,12 +43,13 @@ VLS Testnet
 LocalDevNet
 
 To add new network, you need to:
+
 1. update local .env
 2. edit `./deploy-config/{chain_id}.json`, add required params.
 
 ```shell
 # With verification
-forge script script/Deploy.s.sol:Deploy \
+source .env && forge script script/Deploy.s.sol:Deploy \
 --chain-id $CHAIN_ID \
 --rpc-url $RPC_URL \
 --private-key $PRIVATE_KEY \
@@ -60,13 +60,12 @@ forge script script/Deploy.s.sol:Deploy \
 --broadcast --ffi -vvvv
 
 # Without verification
-forge script script/Deploy.s.sol:Deploy \
+source .env && forge script script/Deploy.s.sol:Deploy \
 --chain-id $CHAIN_ID \
 --rpc-url $RPC_URL \
 --private-key $PRIVATE_KEY \
 --broadcast --ffi -vvvv
 
-
 # generate easily readable abi to /deployments
-forge script script/Deploy.s.sol:Deploy --sig 'sync()' --rpc-url $RPC_URL --broadcast --ffi
+source .env && forge script script/Deploy.s.sol:Deploy --sig 'sync()' --rpc-url $RPC_URL --broadcast --ffi
 ```
