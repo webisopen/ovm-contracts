@@ -39,7 +39,7 @@ contract Deploy is Deployer {
     function run() external {
         deployImplementations();
 
-        // deployProxies();
+        deployProxies();
     }
 
     /// @notice Deploy all of the proxies
